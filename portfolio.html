@@ -221,86 +221,89 @@
             font-weight: 500;
         }
 
-        /* FILTER TABS */
-        .filter-bar {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-        }
-        .pf-btn {
-            padding: 10px 22px;
-            border: 2px solid var(--border);
-            border-radius: var(--radius-lg);
-            background: var(--white);
-            font-family: inherit;
-            font-size: 0.9rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, color 0.2s;
-        }
-        .pf-btn:hover { background: var(--gray-light); }
-        .pf-btn.active { background: var(--black); color: var(--white); border-color: var(--black); }
-
-        /* PORTFOLIO GRID */
-        .portfolio-grid {
+        /* BENTO GRID */
+        .bento-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto auto auto auto;
+            gap: 20px;
         }
-        .portfolio-card {
-            border: 2px solid var(--border);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            background: var(--white);
-            transition: box-shadow 0.2s, transform 0.2s;
-        }
-        .portfolio-card:hover { box-shadow: 6px 6px 0 var(--black); transform: translateY(-3px); }
-        .portfolio-thumb {
-            height: 220px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4.5rem;
+        /* Row 1: cards 1,2 span 2 cols each */
+        .bento-card-1 { grid-column: 1 / 3; grid-row: 1; }
+        .bento-card-2 { grid-column: 3 / 5; grid-row: 1; }
+        /* Row 2: cards 4,5 span 2 cols each */
+        .bento-card-4 { grid-column: 1 / 3; grid-row: 2; }
+        .bento-card-5 { grid-column: 3 / 5; grid-row: 2; }
+        /* Row 3: HoF heading full width */
+        /* Row 4: 4 proof cards 1 col each — auto placed */
+        .hof-proof-card { grid-row: 4; }
+
+        .bento-media {
+            width: 100%;
             position: relative;
             overflow: hidden;
+            background: var(--gray-light);
         }
-        .portfolio-thumb-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(0,0,0,0.65);
-            display: flex; align-items: center; justify-content: center; gap: 14px;
-            opacity: 0;
-            transition: opacity 0.3s;
+        .bento-card-1 .bento-media,
+        .bento-card-2 .bento-media { height: 340px; }
+        .bento-card-3 .bento-media { height: 300px; }
+        .bento-card-4 .bento-media { height: 280px; }
+        .bento-card-5 .bento-media { height: 280px; }
+
+        .bento-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
-        .portfolio-card:hover .portfolio-thumb-overlay { opacity: 1; }
-        .overlay-btn {
-            background: var(--white);
-            color: var(--black);
-            border: 2px solid var(--white);
-            border-radius: var(--radius-lg);
-            padding: 8px 18px;
-            font-size: 0.82rem;
-            font-weight: 700;
-            text-decoration: none;
-            cursor: pointer;
-            transition: background 0.2s;
+        /* strip images override */
+        .screenshots-strip.bento-media img,
+        .screenshots-strip img {
+            width: 0 !important;
+            flex: 1 1 0 !important;
+            min-width: 0 !important;
         }
-        .overlay-btn:hover { background: var(--green); border-color: var(--green); }
-        .portfolio-info { padding: 22px; }
-        .portfolio-info .cat {
+        .bento-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Screenshots strip for card 3 */
+        .screenshots-strip {
+            display: flex;
+            gap: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+        .screenshots-strip img {
+            flex: 1 1 0;
+            min-width: 0;
+            width: 0;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            border-right: 2px solid var(--border);
+            display: block;
+        }
+        .screenshots-strip img:last-child { border-right: none; }
+
+        .bento-info { padding: 20px 22px 22px; }
+        .bento-info .cat {
             font-size: 0.72rem;
             font-weight: 700;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.06em;
         }
-        .portfolio-info h3 {
+        .bento-info h3 {
             font-size: 1.05rem;
             font-weight: 700;
             margin: 6px 0 8px;
         }
-        .portfolio-info p {
+        .bento-info p {
             font-size: 0.85rem;
             color: var(--text-muted);
             line-height: 1.6;
@@ -309,7 +312,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
-            margin-top: 14px;
+            margin-top: 12px;
         }
         .ptag {
             font-size: 0.72rem;
@@ -318,6 +321,165 @@
             border-radius: 5px;
             padding: 3px 9px;
             color: var(--black);
+        }
+        .bento-num {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: var(--black);
+            color: var(--white);
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 2;
+        }
+
+        .bento-card {
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: var(--white);
+            transition: box-shadow 0.2s, transform 0.2s;
+            position: relative;
+        }
+        .bento-card:hover { box-shadow: 6px 6px 0 var(--black); transform: translateY(-3px); }
+
+        @keyframes hofShake {
+            0%   { transform: translateY(0) rotate(0deg); }
+            15%  { transform: translateY(-7px) rotate(-2deg); }
+            30%  { transform: translateY(5px) rotate(2deg); }
+            45%  { transform: translateY(-4px) rotate(-1deg); }
+            60%  { transform: translateY(3px) rotate(1deg); }
+            75%  { transform: translateY(-2px) rotate(-0.5deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+        .hof-shaking { animation: hofShake 0.55s ease forwards; }
+        #hof-merged { transition: opacity 0.5s ease, transform 0.5s ease; }
+        #hof-merged:hover { box-shadow: 6px 6px 0 var(--black); }
+
+        @media (max-width: 768px) {
+            .bento-grid { grid-template-columns: 1fr 1fr; }
+            .bento-card-1, .bento-card-2 { grid-column: span 2; }
+            .bento-card-4, .bento-card-5 { grid-column: span 1; }
+            .hof-proof-card { grid-row: auto; grid-column: span 1; }
+        }
+        .hof-wrapper {
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: var(--white);
+        }
+        .hof-header {
+            padding: 20px 22px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+        .hof-sub {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .hof-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+        .hof-card {
+            border-right: 2px solid var(--border);
+            overflow: hidden;
+            height: 300px;
+        }
+        .hof-card:last-child { border-right: none; }
+        .hof-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .hof-card:hover img { transform: scale(1.04); }
+        .hof-footer {
+            padding: 20px 22px 22px;
+            border-top: 2px solid var(--border);
+        }
+        .hof-footer .cat {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .hof-footer h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 6px 0 8px;
+        }
+        .hof-footer p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        @media (max-width: 768px) {
+            .hof-grid { grid-template-columns: repeat(2, 1fr); }
+            .hof-card { height: 200px; border-bottom: 2px solid var(--border); }
+            .hof-card:nth-child(odd) { border-right: 2px solid var(--border); }
+            .hof-card:nth-child(even) { border-right: none; }
+            .hof-card:nth-last-child(-n+2) { border-bottom: none; }
+        }
+        .card-hover-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(25, 26, 35, 0.80);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 3;
+            backdrop-filter: blur(2px);
+        }
+        .bento-card-1:hover .card-hover-overlay,
+        .bento-card-2:hover .card-hover-overlay { opacity: 1; pointer-events: auto; }
+        .view-card-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #ffffff;
+            color: var(--black);
+            border: 2px solid #ffffff;
+            border-radius: var(--radius-lg);
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, border-color 0.2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .view-card-btn i { font-size: 1rem; }
+        .view-card-btn:hover {
+            background: var(--black);
+            color: #ffffff;
+            border-color: var(--black);
+        }
+
+        @media (max-width: 768px) {
+            .bento-grid { grid-template-columns: 1fr; }
+            .bento-card-1, .bento-card-2, .bento-card-3,
+            .bento-card-4, .bento-card-5 { grid-column: 1; grid-row: auto; }
+            .bento-card-1 .bento-media,
+            .bento-card-2 .bento-media,
+            .bento-card-3 .bento-media,
+            .bento-card-4 .bento-media,
+            .bento-card-5 .bento-media { height: 220px; }
         }
 
         /* FEATURED ROW */
@@ -577,189 +739,135 @@
     </div>
 </section>
 
-<!-- FEATURED PROJECT -->
-<section class="section" style="padding-top:0">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="tag-label">Featured</span>
-            <h2>Case of the month</h2>
-        </div>
-        <div class="featured-project reveal">
-            <div class="featured-thumb" style="background:#191A23;">🛒</div>
-            <div class="featured-content">
-                <span class="featured-badge">E-Commerce</span>
-                <h2>Luxe Fashion — Full-Stack Redesign & Growth</h2>
-                <p>We redesigned Luxe Fashion's entire digital presence — from a conversion-focused storefront to automated email campaigns — resulting in a 3× spike in monthly revenue within 90 days.</p>
-                <div class="featured-meta">
-                    <div class="featured-meta-item">
-                        <div class="lbl">Revenue Growth</div>
-                        <div class="val">+312%</div>
-                    </div>
-                    <div class="featured-meta-item">
-                        <div class="lbl">Timeline</div>
-                        <div class="val">90 Days</div>
-                    </div>
-                    <div class="featured-meta-item">
-                        <div class="lbl">Category</div>
-                        <div class="val">Web + Marketing</div>
-                    </div>
-                </div>
-                <div style="margin-top:10px;">
-                    <a href="index.html#contact" class="btn-primary" style="padding:12px 28px;font-size:0.9rem;">Start a Similar Project →</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- PORTFOLIO GRID -->
+<!-- PORTFOLIO BENTO -->
 <section class="section" style="padding-top:0">
     <div class="container">
         <div class="section-header reveal">
             <span class="tag-label">All Work</span>
-            <h2>Browse by category</h2>
+            <h2>Our Projects</h2>
         </div>
-        <div class="filter-bar reveal">
-            <button class="pf-btn active" data-filter="all">All</button>
-            <button class="pf-btn" data-filter="web">Web Dev</button>
-            <button class="pf-btn" data-filter="app">Mobile Apps</button>
-            <button class="pf-btn" data-filter="seo">SEO</button>
-            <button class="pf-btn" data-filter="brand">Branding</button>
-            <button class="pf-btn" data-filter="social">Social Media</button>
-        </div>
-        <div class="portfolio-grid">
+        <div class="bento-grid">
 
-            <div class="portfolio-card reveal" data-category="web">
-                <div class="portfolio-thumb" style="background:#e8f0fe;">🏦</div>
-                <div class="portfolio-thumb-overlay">
-                    <a href="index.html#contact" class="overlay-btn">View Case</a>
+            <!-- 1: Justfit App -->
+            <div class="bento-card bento-card-1 reveal">
+                <div class="card-hover-overlay">
+                    <a href="https://play.google.com/store/apps/details?id=fitness.home.workout.weight.loss" target="_blank" rel="noopener" class="view-card-btn">
+                        <i class="fas fa-arrow-up-right-from-square"></i> View App
+                    </a>
                 </div>
-                <div class="portfolio-info">
-                    <div class="cat">Web Development</div>
-                    <h3>FinVault — Banking Dashboard</h3>
-                    <p>Custom React dashboard for a fintech startup, featuring real-time charts, dark mode, and role-based access.</p>
-                    <div class="portfolio-tags">
-                        <span class="ptag">React</span><span class="ptag">Node.js</span><span class="ptag">Figma</span>
-                    </div>
+                <div class="bento-media">
+                    <img src="" alt="Justfit App" onerror="this.style.display='none';this.parentElement.style.background='#fce8f0';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;\'>💪</div>'">
                 </div>
-            </div>
-
-            <div class="portfolio-card reveal delay-1" data-category="app">
-                <div class="portfolio-thumb" style="background:#fce8f0;">🏃</div>
-                <div class="portfolio-thumb-overlay">
-                    <a href="index.html#contact" class="overlay-btn">View Case</a>
-                </div>
-                <div class="portfolio-info">
+                <div class="bento-info">
                     <div class="cat">Mobile App</div>
-                    <h3>FitTrack — Fitness Companion</h3>
-                    <p>Cross-platform Flutter app with AI-powered workout plans and live progress tracking for 10k+ users.</p>
+                    <h3>Justfit — Fitness App</h3>
+                    <p>A complete fitness companion app with personalised workout plans, progress tracking, and nutrition guidance.</p>
                     <div class="portfolio-tags">
-                        <span class="ptag">Flutter</span><span class="ptag">Firebase</span><span class="ptag">AI</span>
+                        <span class="ptag">Mobile App</span><span class="ptag">UI/UX</span><span class="ptag">Fitness</span>
                     </div>
                 </div>
             </div>
 
-            <div class="portfolio-card reveal delay-2" data-category="seo">
-                <div class="portfolio-thumb" style="background:#e8f5e9;">📈</div>
-                <div class="portfolio-thumb-overlay">
-                    <a href="index.html#contact" class="overlay-btn">View Case</a>
+            <!-- 2: Website -->
+            <div class="bento-card bento-card-2 reveal delay-1">
+                <div class="card-hover-overlay">
+                    <a href="https://octane.rent/" target="_blank" rel="noopener" class="view-card-btn">
+                        <i class="fas fa-arrow-up-right-from-square"></i> View Website
+                    </a>
                 </div>
-                <div class="portfolio-info">
-                    <div class="cat">SEO</div>
-                    <h3>GreenMart — Organic Growth</h3>
-                    <p>Took GreenMart from page 5 to position #1 for 40+ keywords in 5 months through technical SEO and content strategy.</p>
-                    <div class="portfolio-tags">
-                        <span class="ptag">SEO</span><span class="ptag">Content</span><span class="ptag">Analytics</span>
-                    </div>
+                <div class="bento-media">
+                    <img src="" alt="Website Project" onerror="this.style.display='none';this.parentElement.style.background='#e8f0fe';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;\'>🌐</div>'">
                 </div>
-            </div>
-
-            <div class="portfolio-card reveal" data-category="brand">
-                <div class="portfolio-thumb" style="background:#f3e8fe;">✨</div>
-                <div class="portfolio-thumb-overlay">
-                    <a href="index.html#contact" class="overlay-btn">View Case</a>
-                </div>
-                <div class="portfolio-info">
-                    <div class="cat">Branding</div>
-                    <h3>Aura Labs — Brand Identity</h3>
-                    <p>Complete visual identity for a beauty-tech startup: logo, typography system, brand guidelines, and packaging design.</p>
-                    <div class="portfolio-tags">
-                        <span class="ptag">Logo</span><span class="ptag">Typography</span><span class="ptag">Packaging</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="portfolio-card reveal delay-1" data-category="social">
-                <div class="portfolio-thumb" style="background:#fff3e0;">📣</div>
-                <div class="portfolio-thumb-overlay">
-                    <a href="index.html#contact" class="overlay-btn">View Case</a>
-                </div>
-                <div class="portfolio-info">
-                    <div class="cat">Social Media</div>
-                    <h3>Crunch Snacks — Viral Campaign</h3>
-                    <p>Instagram + Reels campaign that gained 2.4M impressions organically in 3 weeks and 180% follower growth.</p>
-                    <div class="portfolio-tags">
-                        <span class="ptag">Instagram</span><span class="ptag">Reels</span><span class="ptag">UGC</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="portfolio-card reveal delay-2" data-category="web">
-                <div class="portfolio-thumb" style="background:#e3f2fd;">🏨</div>
-                <div class="portfolio-thumb-overlay">
-                    <a href="index.html#contact" class="overlay-btn">View Case</a>
-                </div>
-                <div class="portfolio-info">
+                <div class="bento-info">
                     <div class="cat">Web Development</div>
-                    <h3>StayLux — Hotel Booking Platform</h3>
-                    <p>End-to-end booking platform with real-time availability, Stripe payments, and an admin dashboard.</p>
+                    <h3>Octane — Dubai Car Rental Platform</h3>
+                    <p>A premium car rental web platform for Dubai's luxury market — built with seamless booking UX, fleet showcase, and high-conversion landing pages.</p>
                     <div class="portfolio-tags">
-                        <span class="ptag">Next.js</span><span class="ptag">Stripe</span><span class="ptag">Postgres</span>
+                        <span class="ptag">Web Design</span><span class="ptag">Development</span><span class="ptag">Dubai</span><span class="ptag">Car Rental</span>
                     </div>
                 </div>
             </div>
 
-            <div class="portfolio-card reveal" data-category="app">
-                <div class="portfolio-thumb" style="background:#fafae8;">🛵</div>
-                <div class="portfolio-thumb-overlay">
-                    <a href="index.html#contact" class="overlay-btn">View Case</a>
+            <!-- 4: Video -->
+            <div class="bento-card bento-card-4 reveal">
+                <div class="bento-num">3</div>
+                <div class="bento-media">
+                    <video controls poster="" preload="metadata">
+                        <source src="" type="video/mp4">
+                        <source src="" type="video/webm">
+                    </video>
                 </div>
-                <div class="portfolio-info">
-                    <div class="cat">Mobile App</div>
-                    <h3>ZipEats — Food Delivery App</h3>
-                    <p>React Native delivery app with live GPS tracking, push notifications, and a driver management panel.</p>
+                <div class="bento-info">
+                    <div class="cat">Video Production</div>
+                    <h3>Campaign — Video Showcase</h3>
+                    <p>A full-production video campaign that captured attention, told the brand story, and drove real conversions.</p>
                     <div class="portfolio-tags">
-                        <span class="ptag">React Native</span><span class="ptag">Maps API</span><span class="ptag">FCM</span>
+                        <span class="ptag">Video</span><span class="ptag">Production</span><span class="ptag">Campaign</span>
                     </div>
                 </div>
             </div>
 
-            <div class="portfolio-card reveal delay-1" data-category="seo">
-                <div class="portfolio-thumb" style="background:#fce4ec;">🏥</div>
-                <div class="portfolio-thumb-overlay">
-                    <a href="index.html#contact" class="overlay-btn">View Case</a>
+            <!-- 5: Screenshot -->
+            <div class="bento-card bento-card-5 reveal delay-1">
+                <div class="bento-num">4</div>
+                <div class="bento-media">
+                    <img src="" alt="Result Screenshot" onerror="this.style.display='none';this.parentElement.style.background='#e8f5e9';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;\'>📊</div>'">
                 </div>
-                <div class="portfolio-info">
-                    <div class="cat">SEO + Content</div>
-                    <h3>MediCare Plus — Local SEO Domination</h3>
-                    <p>Generated 3,200+ monthly leads from Google for a healthcare chain across 8 cities with local SEO.</p>
+                <div class="bento-info">
+                    <div class="cat">Results</div>
+                    <h3>Performance — The Numbers Speak</h3>
+                    <p>Tangible results delivered for our client — from traffic spikes to lead generation and revenue growth.</p>
                     <div class="portfolio-tags">
-                        <span class="ptag">Local SEO</span><span class="ptag">GMB</span><span class="ptag">Backlinks</span>
+                        <span class="ptag">Analytics</span><span class="ptag">ROI</span><span class="ptag">Results</span>
                     </div>
                 </div>
             </div>
 
-            <div class="portfolio-card reveal delay-2" data-category="brand">
-                <div class="portfolio-thumb" style="background:#e8fce8;">☕</div>
-                <div class="portfolio-thumb-overlay">
-                    <a href="index.html#contact" class="overlay-btn">View Case</a>
+            <!-- Hall of Fame animated section -->
+            <div id="hof-section" style="grid-column: 1 / -1; grid-row: 3 / 5;">
+                <!-- Heading -->
+                <div class="reveal" style="display:flex; align-items:center; gap:12px; padding-bottom:16px;">
+                    <span class="tag-label" style="font-size:1rem; padding:5px 14px;">🏆 Hall of Fame</span>
+                    <span style="font-size:0.8rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;">Real Results. Real Clients.</span>
                 </div>
-                <div class="portfolio-info">
-                    <div class="cat">Branding + Web</div>
-                    <h3>Brewed — Coffee Chain Rebrand</h3>
-                    <p>Rebranded a 12-outlet coffee chain with new identity, menu design, and a redesigned website that cut bounce rate by 40%.</p>
-                    <div class="portfolio-tags">
-                        <span class="ptag">Brand</span><span class="ptag">Web</span><span class="ptag">Print</span>
+                <!-- 4 cards wrapper -->
+                <div id="hof-cards-wrap" style="display:grid; grid-template-columns: repeat(4,1fr); gap:20px;">
+                    <div class="bento-card hof-proof-card" data-hof="0">
+                        <div class="bento-media" style="height:260px;">
+                            <img src="assets/proofs/proof1.png" alt="Proof 1" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;">
+                        </div>
+                    </div>
+                    <div class="bento-card hof-proof-card" data-hof="1">
+                        <div class="bento-media" style="height:260px;">
+                            <img src="assets/proofs/proof2.png" alt="Proof 2" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;">
+                        </div>
+                    </div>
+                    <div class="bento-card hof-proof-card" data-hof="2">
+                        <div class="bento-media" style="height:260px;">
+                            <img src="assets/proofs/proof3.png" alt="Proof 3" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;">
+                        </div>
+                    </div>
+                    <div class="bento-card hof-proof-card" data-hof="3">
+                        <div class="bento-media" style="height:260px;">
+                            <img src="assets/proofs/proof4.png" alt="Proof 4" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;">
+                        </div>
+                    </div>
+                </div>
+                <!-- Merged card (hidden initially) -->
+                <div id="hof-merged" style="display:none; border:2px solid var(--border); border-radius:var(--radius-md); overflow:hidden; opacity:0; transform:scale(0.97); transition: opacity 0.5s ease, transform 0.5s ease;">
+                    <div style="display:grid; grid-template-columns:repeat(4,1fr); height:260px;">
+                        <div style="overflow:hidden; border-right:2px solid var(--border);"><img src="assets/proofs/proof1.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;"></div>
+                        <div style="overflow:hidden; border-right:2px solid var(--border);"><img src="assets/proofs/proof2.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;"></div>
+                        <div style="overflow:hidden; border-right:2px solid var(--border);"><img src="assets/proofs/proof3.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;"></div>
+                        <div style="overflow:hidden;"><img src="assets/proofs/proof4.png" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;"></div>
+                    </div>
+                    <div class="bento-info">
+                        <div class="cat">Social Media Management</div>
+                        <h3>Social Media — Proven Results</h3>
+                        <p>Real numbers. Real growth. Our social media management delivered measurable engagement, reach, and follower growth for our clients.</p>
+                        <div class="portfolio-tags">
+                            <span class="ptag">Instagram</span><span class="ptag">Content</span><span class="ptag">Growth</span><span class="ptag">Analytics</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -874,25 +982,62 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     reveals.forEach(r => ro.observe(r));
 
-    document.querySelectorAll('.pf-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const filter = btn.dataset.filter;
-            document.querySelectorAll('.portfolio-card').forEach(card => {
-                if (filter === 'all' || card.dataset.category === filter) {
-                    card.style.display = 'block';
-                    setTimeout(() => { card.style.opacity = 1; card.style.transform = 'scale(1)'; }, 50);
-                } else {
-                    card.style.opacity = 0;
-                    card.style.transform = 'scale(0.95)';
-                    setTimeout(() => { card.style.display = 'none'; }, 300);
+
+
+    // HOF SHAKE + MERGE ANIMATION
+    (function() {
+        const wrap = document.getElementById('hof-cards-wrap');
+        const merged = document.getElementById('hof-merged');
+        const cards = document.querySelectorAll('.hof-proof-card');
+        if (!wrap || !merged || !cards.length) return;
+
+        let triggered = false;
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting && !triggered) {
+                    triggered = true;
+                    obs.disconnect();
+                    runHofAnim();
                 }
             });
-        });
-    });
+        }, { threshold: 0.4 });
+        obs.observe(wrap);
 
-    // ROUGH NOTATION NAV UNDERLINES
+        function runHofAnim() {
+            // Step 1: staggered shake
+            cards.forEach((card, i) => {
+                setTimeout(() => {
+                    card.classList.add('hof-shaking');
+                }, i * 100);
+            });
+
+            // Step 2: after shakes done, collapse gap
+            setTimeout(() => {
+                wrap.style.transition = 'gap 0.4s ease';
+                wrap.style.gap = '0px';
+            }, 900);
+
+            // Step 3: fade out cards, show merged
+            setTimeout(() => {
+                wrap.style.transition = 'opacity 0.35s ease, gap 0.4s ease';
+                wrap.style.opacity = '0';
+            }, 1350);
+
+            setTimeout(() => {
+                wrap.style.display = 'none';
+                merged.style.display = 'block';
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        merged.style.opacity = '1';
+                        merged.style.transform = 'scale(1)';
+                    });
+                });
+            }, 1700);
+        }
+
+
+
+
     (function() {
         const rnScript = document.createElement('script');
         rnScript.type = 'module';
@@ -917,6 +1062,7 @@
         `;
         document.body.appendChild(rnScript);
     })();
+})();
 </script>
 </body>
 </html>
